@@ -1,0 +1,59 @@
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+
+// Dimensioni del canvas
+const canvasWidth = 800;
+const canvasHeight = 600;
+
+// Posizioni iniziali
+let playerX = 50;
+let playerY = canvasHeight - 50;
+let obstacleX = canvasWidth;
+let obstacleY = canvasHeight - 50;
+
+// Dimensioni degli oggetti
+const playerSize = 50;
+const obstacleSize = 50;
+
+// Velocità
+const playerSpeed = 5;
+const obstacleSpeed = 3;
+
+// Disegna il gioco
+function draw() {
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+  ctx.fillStyle = 'blue'; // Colore del giocatore
+  ctx.fillRect(playerX, playerY, playerSize, playerSize);
+  ctx.fillStyle = 'red'; // Colore dell'ostacolo
+  ctx.fillRect(obstacleX, obstacleY, obstacleSize, obstacleSize);
+}
+
+// Aggiorna lo stato del gioco
+function update() {
+  // Muovi l'ostacolo
+  obstacleX -= obstacleSpeed;
+
+  // Ricicla l'ostacolo se esce dallo schermo
+  if (obstacleX < -obstacleSize) {
+    obstacleX = canvasWidth;
+    obstacleY = Math.random() * (canvasHeight - obstacleSize); // Posizione randomica per l'ostacolo
+  }
+
+  // Controlla le collisioni (semplificato)
+  if (playerX < obstacleX + obstacleSize &&
+      playerX + playerSize > obstacleX &&
+      playerY < obstacleY + obstacleSize &&
+      playerY + playerSize > obstacleY) {
+    console.log('Collisione!');
+    // Qui puoi aggiungere del codice per gestire la collisione, ad esempio fermare il gioco
+  }
+}
+
+// Ciclo di gioco
+function gameLoop() {
+  update();
+  draw();
+  requestAnimationFrame(gameLoop);
+}
+
+gameLoop();

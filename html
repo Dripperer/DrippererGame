@@ -1,0 +1,25 @@
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+
+let x = 50; // Posizione iniziale del personaggio
+let y = 50;
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Pulisci lo schermo
+  ctx.fillStyle = 'red';
+  ctx.fillRect(x, y, 50, 50); // Disegna un quadrato rosso (il personaggio)
+}
+
+function update() {
+  // Qui puoi aggiungere del codice per muovere il personaggio
+  // Ad esempio, se vuoi muoverlo a destra di 1 pixel ad ogni frame:
+  x++;
+}
+
+function gameLoop() {
+  update();
+  draw();
+  requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
